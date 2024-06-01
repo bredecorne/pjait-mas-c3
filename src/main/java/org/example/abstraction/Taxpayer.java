@@ -45,11 +45,23 @@ public abstract class Taxpayer {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public BigDecimal getRevenue() {
         return revenue;
     }
 
+    public void setRevenue(BigDecimal revenue) {
+        this.revenue = revenue;
+    }
+
     public BigDecimal getExpenses() {
         return expenses;
+    }
+
+    public void setExpenses(BigDecimal expenses) {
+        this.expenses = expenses;
     }
 }
