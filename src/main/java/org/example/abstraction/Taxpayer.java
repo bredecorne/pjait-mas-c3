@@ -1,6 +1,8 @@
 package org.example.abstraction;
 
 import java.math.BigDecimal;
+import java.util.Map;
+import java.util.NavigableMap;
 
 public abstract class Taxpayer {
     private String name;
@@ -12,8 +14,32 @@ public abstract class Taxpayer {
         this.revenue = revenue;
         this.expenses = expenses;
     }
-
+    
     abstract BigDecimal getIncome();
+    
+    public BigDecimal calculateProgressiveTax(BigDecimal untaxedIncome, NavigableMap<BigDecimal, BigDecimal> scale) {
+        var remainingIncome = untaxedIncome;
+        var incomeAfterTax = BigDecimal.ZERO;
+        
+        for (Map.Entry<BigDecimal, BigDecimal> entry : scale.descendingMap().entrySet()) {
+            var threshold = entry.getKey();
+            var rate = BigDecimal.ONE.subtract(entry.getValue());
+
+            if (remainingIncome.compareTo(threshold) >= 0) {
+                incomeAfterTax = incomeAfterTax.add(
+                        remainingIncome.subtract(threshold).multiply(rate)
+                );
+                remainingIncome = threshold;
+            } else {
+                incomeAfterTax = incomeAfterTax.add(
+                        remainingIncome.subtract(threshold).multiply(rate)
+                );
+                break;
+            }
+        }
+
+        return incomeAfterTax;
+    }
 
     public String getName() {
         return name;
