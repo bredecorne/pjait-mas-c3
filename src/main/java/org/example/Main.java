@@ -1,9 +1,8 @@
 package org.example;
 
-import org.example.abstraction.LegalPerson;
-import org.example.abstraction.NaturalPerson;
-
-import java.math.BigDecimal;
+import org.example.multipleinheritance.GminaMiejska;
+import org.example.multipleinheritance.GminaMiejskoWiejska;
+import org.example.multipleinheritance.GminaWiejska;
 
 public class Main {
     public static void main(String[] args) {
