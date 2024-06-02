@@ -57,6 +57,32 @@ class MusicianTest {
     }
 
     @Test
+    void changingTypeAllowsOtherMethodsToBeUsed() {
+        musician = new Musician(MusicianType.PIANIST, "Yang Mang Jr");
+        try {
+            musician.setRepertoire("Chopin, Bach");
+        } catch (Exception e) {
+            fail("Exception should not be thrown for a pianist setting repertoire.");
+        }
+        
+        musician.setType(MusicianType.SINGER);
+        try {
+            musician.setVocalRange("Mezzo-Soprano");
+        } catch (Exception e) {
+            fail("Exception should not be thrown for a singer setting vocal range.");
+        }
+
+        assertAll(
+                () -> assertEquals("Yang Mang Jr", musician.getName()),
+                () -> assertEquals(MusicianType.SINGER, musician.getType()),
+                () -> assertEquals("Mezzo-Soprano", musician.getVocalRange()),
+                () -> assertThrows(
+                        Exception.class,
+                        () -> musician.getRepertoire())
+        );
+    }
+
+    @Test
     void throwsExceptionForInvalidAttributeAccess() {
         musician = new Musician(MusicianType.SINGER, "Bajon");
         assertThrows(Exception.class, () -> musician.setGuitarType("Acoustic"));
